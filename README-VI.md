@@ -2,72 +2,106 @@
 
 [English](README.md)
 
-Công cụ quản lý email và lưu trữ đám mây cho Gmail, Google Drive và OneDrive bằng API chính thức.
+Công cụ quản lý email và lưu trữ đám mây cho Gmail, Google Drive và OneDrive.
 
 Thiết kế cho quy trình làm việc với AI.
 
 
 ## DÀNH CHO NGƯỜI MỚI BẮT ĐẦU
 
-Nếu bạn chưa từng lập trình, hãy làm theo các bước sau.
+80% công việc là cài đặt Claude Code. Sau khi có Claude Code, nó sẽ lo hết mọi thứ.
 
-### Bước 1: Cài Đặt Python
+### Bước 1: Cài Đặt Visual Studio Code
 
-Python là ngôn ngữ lập trình các công cụ này được viết bằng.
-
-- Mac: Mở Terminal (tìm "Terminal" trong Spotlight), sau đó gõ:
-
-      xcode-select --install
-
-  Sau đó cài Python từ https://www.python.org/downloads/
-
-- Windows: Tải Python từ https://www.python.org/downloads/
-  Khi cài đặt, CHỌN ô "Add Python to PATH"
-
-Nếu bị kẹt, hỏi ChatGPT: "Làm sao để cài Python trên [Mac/Windows]?"
-
-### Bước 2: Cài Đặt Trình Soạn Thảo Code (Tùy Chọn)
-
-Bạn có thể dùng bất kỳ trình soạn thảo nào, nhưng Visual Studio Code được khuyến dùng.
+Đây là trình soạn thảo code nơi Claude Code chạy.
 
 - Tải từ https://code.visualstudio.com/
 - Cài đặt như mọi ứng dụng khác
 
-Nếu bị kẹt, hỏi ChatGPT: "Làm sao để cài Visual Studio Code?"
+Nếu bị kẹt, hỏi ChatGPT: "Làm sao để cài Visual Studio Code trên [Mac/Windows]?"
 
-### Bước 3: Mở Terminal hoặc Command Prompt
+### Bước 2: Cài Đặt Claude Code Extension
 
-- Mac: Tìm "Terminal" trong Spotlight (Cmd + Space)
-- Windows: Tìm "Command Prompt" hoặc "PowerShell" trong menu Start
+Sau khi VS Code được cài đặt:
 
-Đây là nơi bạn gõ các lệnh.
+1. Mở VS Code
+2. Nhấn Cmd+Shift+X (Mac) hoặc Ctrl+Shift+X (Windows) để mở Extensions
+3. Tìm "Claude Code"
+4. Nhấn Install
 
-### Bước 4: Tải Bộ Công Cụ
+Bạn sẽ cần Anthropic API key. Lấy tại https://console.anthropic.com/
 
-Trong Terminal hoặc Command Prompt, gõ:
+Nếu bị kẹt, hỏi ChatGPT: "Làm sao để cài Claude Code trong VS Code?"
 
-    git clone https://github.com/dakthi/claude-comms.git
-    cd claude-comms
+### Bước 3: Xong Rồi
 
-Nếu "git" không tìm thấy:
-- Mac: Sẽ hiện thông báo cài đặt. Chọn có.
-- Windows: Tải từ https://git-scm.com/downloads
+Thật đấy. Đó là phần khó. Giờ chỉ cần nói chuyện với Claude Code.
 
-Nếu bị kẹt, hỏi ChatGPT: "Làm sao để clone một git repository?"
+Mở thư mục này trong VS Code, sau đó mở Claude Code và thử:
 
-### Bước 5: Cài Đặt Các Gói Cần Thiết
+    "Giúp tôi thiết lập bộ công cụ này"
 
-Trong Terminal, gõ:
+    "Tôi muốn dọn dẹp Gmail inbox"
 
-    pip3 install google-api-python-client google-auth-oauthlib google-auth-httplib2 requests python-dotenv
+    "Cho tôi xem có gì trong Google Drive"
 
-Nếu "pip3" không tìm thấy, thử "pip" thay thế.
+    "Bộ công cụ này làm được gì?"
 
-### Bước 6: Thiết Lập Quyền Truy Cập API
+Claude Code sẽ:
+- Cài Python nếu bạn chưa có
+- Cài tất cả các gói cần thiết
+- Hướng dẫn bạn thiết lập API từng bước
+- Xác thực với Gmail, Drive và OneDrive
+- Thực sự làm công việc cho bạn
 
-Bước này cần tạo tài khoản và lấy thông tin xác thực. Làm theo phần QUICK START bên dưới.
+Bạn không cần:
+- Nhớ các lệnh
+- Hiểu code
+- Đọc phần còn lại của tài liệu này
+- Tự mình tìm hiểu
 
-Nếu bước nào khó hiểu, copy lỗi và hỏi ChatGPT giải thích.
+Chỉ cần mô tả những gì bạn muốn bằng tiếng Việt hoặc tiếng Anh. Claude Code sẽ hỏi thêm nếu cần và sau đó làm.
+
+
+### Cách Nói Chuyện Với Claude Code
+
+Hãy nghĩ Claude Code như một trợ lý rất giỏi. Bạn có thể nói tự nhiên:
+
+    "dọn inbox"
+    "email nào từ amazon"
+    "sắp xếp drive"
+    "email chưa đọc"
+    "giúp tôi cài đặt"
+
+Nếu có gì không rõ, Claude Code sẽ hỏi. Nếu có lỗi, cứ nói với Claude Code:
+
+    "không được"
+    "bị lỗi"
+    "thử lại"
+    "sao vậy"
+
+Càng dùng nhiều, càng quen.
+
+
+## BỘ CÔNG CỤ NÀY LÀM GÌ
+
+Sau khi thiết lập, bạn có thể nhờ Claude Code:
+
+- Dọn dẹp Gmail inbox (gán nhãn, lưu trữ, xóa spam)
+- Sắp xếp Google Drive (tạo thư mục, di chuyển file)
+- Quản lý OneDrive
+- Soạn email trả lời
+- Tìm kiếm trên tất cả tài khoản
+
+Bạn không cần biết nó hoạt động như thế nào. Chỉ cần hỏi những gì bạn muốn.
+
+
+---
+
+PHẦN CÒN LẠI CỦA TÀI LIỆU NÀY LÀ THAM KHẢO KỸ THUẬT CHO CLAUDE CODE.
+BẠN KHÔNG CẦN ĐỌC.
+
+---
 
 
 ## TỔNG QUAN

@@ -9,65 +9,99 @@ Built for AI-assisted workflows.
 
 ## FOR COMPLETE BEGINNERS
 
-If you have never coded before, follow these steps first.
+80% of the work is just installing Claude Code. Once you have Claude Code, it will handle everything else.
 
-### Step 1: Install Python
+### Step 1: Install Visual Studio Code
 
-Python is the programming language these tools are written in.
-
-- Mac: Open Terminal (search "Terminal" in Spotlight), then type:
-
-      xcode-select --install
-
-  Then install Python from https://www.python.org/downloads/
-
-- Windows: Download Python from https://www.python.org/downloads/
-  During installation, CHECK the box that says "Add Python to PATH"
-
-If stuck, ask ChatGPT: "How do I install Python on [Mac/Windows]?"
-
-### Step 2: Install a Code Editor (Optional)
-
-You can use any text editor, but Visual Studio Code is recommended.
+This is your code editor where Claude Code runs.
 
 - Download from https://code.visualstudio.com/
 - Install it like any other app
 
-If stuck, ask ChatGPT: "How do I install Visual Studio Code?"
+If stuck, ask ChatGPT: "How do I install Visual Studio Code on [Mac/Windows]?"
 
-### Step 3: Open Terminal or Command Prompt
+### Step 2: Install Claude Code Extension
 
-- Mac: Search "Terminal" in Spotlight (Cmd + Space)
-- Windows: Search "Command Prompt" or "PowerShell" in Start menu
+Once VS Code is installed:
 
-This is where you type commands.
+1. Open VS Code
+2. Press Cmd+Shift+X (Mac) or Ctrl+Shift+X (Windows) to open Extensions
+3. Search for "Claude Code"
+4. Click Install
 
-### Step 4: Download This Toolkit
+You will need an Anthropic API key. Get one at https://console.anthropic.com/
 
-In Terminal or Command Prompt, type:
+If stuck, ask ChatGPT: "How do I install Claude Code in VS Code?"
 
-    git clone https://github.com/dakthi/claude-comms.git
-    cd claude-comms
+### Step 3: You Are Done
 
-If "git" is not found:
-- Mac: It will prompt you to install. Say yes.
-- Windows: Download from https://git-scm.com/downloads
+Seriously. That is the hard part. Now just talk to Claude Code.
 
-If stuck, ask ChatGPT: "How do I clone a git repository?"
+Open this folder in VS Code, then open Claude Code and try these:
 
-### Step 5: Install Required Packages
+    "Help me set up this comms toolkit"
 
-In Terminal, type:
+    "I want to clean up my Gmail inbox"
 
-    pip3 install google-api-python-client google-auth-oauthlib google-auth-httplib2 requests python-dotenv
+    "Show me what is in my Google Drive"
 
-If "pip3" is not found, try "pip" instead.
+    "What can this toolkit do?"
 
-### Step 6: Set Up API Access
+Claude Code will:
+- Install Python if you do not have it
+- Install all required packages
+- Walk you through API setup step by step
+- Authenticate with Gmail, Drive, and OneDrive
+- Actually do the work for you
 
-This requires creating accounts and getting credentials. Follow the QUICK START section below.
+You do not need to:
+- Memorize commands
+- Understand the code
+- Read the rest of this documentation
+- Figure things out yourself
 
-If any step is confusing, copy the error message and ask ChatGPT to explain.
+Just describe what you want in plain English. Claude Code will ask clarifying questions if needed and then do it.
+
+
+### How to Talk to Claude Code
+
+Think of Claude Code like a very capable assistant. You can be casual:
+
+    "clean up my inbox"
+    "what emails do I have from amazon"
+    "organize my drive"
+    "show me unread emails"
+    "help me set this up"
+
+If something is unclear, Claude Code will ask. If something goes wrong, just tell Claude Code what happened:
+
+    "that did not work"
+    "I got an error"
+    "try again"
+    "what went wrong"
+
+The more you use it, the more natural it becomes.
+
+
+## WHAT THIS TOOLKIT DOES
+
+Once set up, you can ask Claude Code to:
+
+- Clean up your Gmail inbox (label, archive, delete spam)
+- Organize your Google Drive (create folders, move files)
+- Manage your OneDrive
+- Draft email replies
+- Search across all your accounts
+
+You do not need to know how it works. Just ask for what you want.
+
+
+---
+
+THE REST OF THIS DOCUMENT IS TECHNICAL REFERENCE FOR CLAUDE CODE.
+YOU DO NOT NEED TO READ IT.
+
+---
 
 
 ## OVERVIEW
