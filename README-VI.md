@@ -1,5 +1,7 @@
 # BỘ CÔNG CỤ COMMS
 
+[English](README.md)
+
 Công cụ quản lý email và lưu trữ đám mây cho Gmail, Google Drive và OneDrive bằng API chính thức.
 
 Thiết kế cho quy trình làm việc với AI.

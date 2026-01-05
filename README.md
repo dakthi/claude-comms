@@ -1,5 +1,7 @@
 # COMMS TOOLKIT
 
+[Tieng Viet / Vietnamese](README-VI.md)
+
 Power-user utilities for managing email and cloud storage across Gmail, Google Drive, and OneDrive using official APIs.
 
 Built for AI-assisted workflows.
