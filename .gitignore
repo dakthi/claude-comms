@@ -1,0 +1,48 @@
+# ===========================================
+# Personal & Sensitive Data (DO NOT COMMIT)
+# ===========================================
+
+# OAuth credentials and tokens
+.secrets/
+credentials.json
+*token*.json
+*.json
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Personal logs with real email data
+logs/CLEANUP-*.md
+logs/UNSUBSCRIBE-*.md
+!logs/.gitkeep
+
+# Personal content
+posts/
+
+# ===========================================
+# Development
+# ===========================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+
+# Claude Code / AI assistants
+.claude/
+
+# ===========================================
+# OS & IDE
+# ===========================================
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
