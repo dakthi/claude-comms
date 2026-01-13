@@ -20,6 +20,19 @@ logs/UNSUBSCRIBE-*.md
 
 # Personal content
 posts/
+active-issues/
+whatsapp-exports/
+TODO-AUTH.md
+
+# Personal documents
+*.pdf
+*.csv
+session-report-*.html
+*-plan.html
+so-sanh-*.html
+
+# WIP tools (uncomment when ready to commit)
+calendar_tool.py
 
 # ===========================================
 # Development

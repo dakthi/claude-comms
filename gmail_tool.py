@@ -43,12 +43,16 @@ TOKEN_FILE = SECRETS_DIR / 'token.json'
 THIELTS_CREDENTIALS_FILE = SECRETS_DIR / 'thielts_credentials.json'
 THIELTS_TOKEN_FILE = SECRETS_DIR / 'thielts_token.json'
 
+# MLP Toastmasters account credentials
+MLP_CREDENTIALS_FILE = SECRETS_DIR / 'mlp_credentials.json'
+MLP_TOKEN_FILE = SECRETS_DIR / 'mlp_token.json'
+
 # Current account selector
-_current_account = 'personal'  # 'personal' or 'thielts'
+_current_account = 'personal'  # 'personal', 'thielts', or 'mlp'
 
 
 def set_account(account):
-    """Switch between 'personal' and 'thielts' accounts."""
+    """Switch between 'personal', 'thielts', and 'mlp' accounts."""
     global _current_account
     _current_account = account
     print(f"Switched to {account} account")
@@ -61,6 +65,9 @@ def get_credentials():
     if _current_account == 'thielts':
         creds_file = THIELTS_CREDENTIALS_FILE
         token_file = THIELTS_TOKEN_FILE
+    elif _current_account == 'mlp':
+        creds_file = MLP_CREDENTIALS_FILE
+        token_file = MLP_TOKEN_FILE
     else:
         creds_file = CREDENTIALS_FILE
         token_file = TOKEN_FILE
@@ -283,6 +290,72 @@ def save_email(msg_id, save_path):
     with open(save_path, 'wb') as f:
         f.write(raw)
     return save_path
+
+
+def create_draft(to, subject, body, reply_to_msg_id=None, attachments=None):
+    """Create a draft email with optional attachments.
+
+    Args:
+        to: Recipient email
+        subject: Email subject
+        body: Email body text
+        reply_to_msg_id: Optional message ID to reply to
+        attachments: Optional list of file paths to attach
+    """
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.base import MIMEBase
+    from email import encoders
+    import mimetypes
+
+    service = get_service()
+
+    # Create multipart message if attachments, else simple text
+    if attachments:
+        message = MIMEMultipart()
+        message.attach(MIMEText(body, 'plain'))
+
+        for file_path in attachments:
+            content_type, _ = mimetypes.guess_type(file_path)
+            if content_type is None:
+                content_type = 'application/octet-stream'
+            main_type, sub_type = content_type.split('/', 1)
+
+            with open(file_path, 'rb') as f:
+                attachment = MIMEBase(main_type, sub_type)
+                attachment.set_payload(f.read())
+
+            encoders.encode_base64(attachment)
+            filename = os.path.basename(file_path)
+            attachment.add_header('Content-Disposition', 'attachment', filename=filename)
+            message.attach(attachment)
+    else:
+        message = MIMEText(body)
+
+    message['to'] = to
+    message['subject'] = subject
+
+    # If replying, get thread info and set headers
+    thread_id = None
+    if reply_to_msg_id:
+        original = service.users().messages().get(userId='me', id=reply_to_msg_id, format='full').execute()
+        thread_id = original.get('threadId')
+        headers = {h['name']: h['value'] for h in original['payload']['headers']}
+
+        # Set In-Reply-To and References headers
+        message_id = headers.get('Message-ID', headers.get('Message-Id', ''))
+        if message_id:
+            message['In-Reply-To'] = message_id
+            message['References'] = message_id
+
+    raw = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')
+
+    draft_body = {'message': {'raw': raw}}
+    if thread_id:
+        draft_body['message']['threadId'] = thread_id
+
+    draft = service.users().drafts().create(userId='me', body=draft_body).execute()
+    return draft
 
 
 def save_email_html(msg_id, save_path):

@@ -224,6 +224,122 @@ MICROSOFT (ONEDRIVE):
     create_folder('New Folder', parent_path='Documents')
 
 
+## ONEDRIVE ORGANIZATION WORKFLOW
+
+### Pictures Folder Convention
+
+All photos and media in OneDrive Pictures should follow this naming format:
+
+    YYYY-MM-DD - Description
+
+Examples:
+
+    2024-05-14 - Wedding Photos
+    2024-11-15 - Eleonora at Green Note
+    2024-07-14 - Acton Carnival
+    2024-02-29 - Anthony Cable
+    2022-07-24 - Screenshots
+    2023-08-28 - Misc
+
+Rules:
+- Date first (ISO format: YYYY-MM-DD)
+- Hyphen separator with spaces
+- Description should be event name, person name, or content type
+- For unknown events, use generic descriptions: "Photos", "Screenshots", "Misc"
+- For photos of people, use their name as description
+
+### Getting Dates
+
+Priority for determining folder dates:
+1. Photo EXIF metadata (takenDateTime) - most accurate
+2. Filename dates (e.g., 20240330_114510773_iOS.heic)
+3. Folder modified/created timestamp - fallback
+
+Check photo metadata via OneDrive API:
+
+    file_info = get_file(file_id)
+    photo = file_info.get('photo', {})
+    taken_date = photo.get('takenDateTime', '')[:10]
+    location = file_info.get('location', {})  # GPS coordinates
+
+### Organizing Loose Files
+
+Group files by date and create dated folders:
+
+    from collections import defaultdict
+
+    files_by_date = defaultdict(list)
+    for f in files:
+        photo = f.get('photo', {})
+        taken = photo.get('takenDateTime', '')[:10]
+        if taken:
+            files_by_date[taken].append(f)
+
+    for date, items in files_by_date.items():
+        folder_name = f'{date} - Misc'
+        new_folder = create_folder(folder_name, parent_path='Pictures')
+        for f in items:
+            move_file(f['id'], new_folder['id'])
+
+### Camera Roll
+
+Camera Roll is the auto-upload destination from phone. Treat it as an inbox:
+- New photos arrive here automatically
+- Periodically organize into dated folders
+- Moving photos out does NOT cause re-uploads
+- Photos in dated folders still appear in OneDrive Photos tab
+
+### Merging Folders
+
+When a target folder already exists, move contents instead of the folder:
+
+    target = get_folder_by_name('2024-05-14')
+    source_contents = get_folder_contents(source_id)
+    for item in source_contents:
+        move_file(item['id'], target['id'])
+    # Only delete source after confirming empty
+    if not get_folder_contents(source_id):
+        delete_file(source_id)
+
+### Cleanup Rules
+
+IMPORTANT: Always verify before deleting:
+- Check folder is empty before deleting
+- Confirm files were successfully moved before removing source
+- Delete duplicates only after verifying original exists
+
+### RAW File Cleanup (Future)
+
+Photography workflow rule:
+- RAW WITH matching JPG = selected/good shot → KEEP the RAW (high-quality original)
+- RAW WITHOUT matching JPG = unselected/reject → DELETE the RAW (unused shot)
+
+The JPG acts as a "selection marker" - if you processed it, you wanted it.
+
+    # Delete unselected RAWs (those without matching JPGs)
+    raw_files = [f for f in contents if f['name'].upper().endswith('.CR2')]
+    jpg_basenames = {f['name'].rsplit('.', 1)[0] for f in contents
+                     if f['name'].upper().endswith(('.JPG', '.JPEG'))}
+
+    for raw in raw_files:
+        base_name = raw['name'].rsplit('.', 1)[0]
+        if base_name not in jpg_basenames:
+            # No JPG = unselected/reject = safe to delete
+            delete_file(raw['id'])
+
+Potential savings: Varies per folder (unselected shots from each shoot)
+
+### Backup Cleanup
+
+The Backup folder often contains:
+- Old desktop backups (teaching materials, documents)
+- Duplicate folders (with (1), (2) suffixes)
+- Empty folders
+- App data folders (Adobe, Zoom, CapCut, Lightroom, etc.)
+
+App data folders can usually be deleted safely as they're cached data, not original files.
+
+
 ## DRIVE ORGANIZATION WORKFLOW
 
 ### Step 1: Audit Current State
